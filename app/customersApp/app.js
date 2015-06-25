@@ -4,7 +4,7 @@
                             
     app.config(['$routeProvider', function($routeProvider){
 
-        var viewBase = '/shivnikum/customermanager/CustomerManager/app/customersApp/views/';
+        var viewBase = 'app/customersApp/views/';
         
         $routeProvider
             .when('/customers', {

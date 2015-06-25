@@ -120,7 +120,7 @@
                 keyboard: true,
                 modalFade: true,
                 controller: 'customerNewEditModelController as vm',
-                templateUrl: '/shivnikum/customermanager/CustomerManager/app/customersApp/views/customers/customerNewEditModel.html'
+                templateUrl: 'app/customersApp/views/customers/customerNewEditModel.html'
             };
             customerModalService.showModal(modalDefaults, {}).then(function(result) {
                 //alert("customerModalService.showModal result.customer = " + result.firstName);
@@ -145,7 +145,7 @@
                     }
                 },
                controller: 'customerEditModelController as vm',
-               templateUrl: '/shivnikum/customermanager/CustomerManager/app/customersApp/views/customers/customerEditModel.html'
+               templateUrl: 'app/customersApp/views/customers/customerEditModel.html'
             };
             
             var modalInstance = $modal.open(modalDefaults);
