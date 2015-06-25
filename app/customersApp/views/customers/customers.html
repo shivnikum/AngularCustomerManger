@@ -1,0 +1,69 @@
+<div class="customers view indent">
+    <div class="container">
+        <header>
+            <h3>Customers</h3>
+        </header>
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="navbar">
+                    <div class="nav navbar-nav">
+                        <li data-ng-class="{active: !vm.listDisplayModeEnabled}" class="toolbaritem">
+                            <a data-ng-click="vm.changeDisplayMode(vm.DisplayModeEnum.Card)">
+                                <span class="glyphicon glyphicon-th-large"></span> Card View
+                            </a>
+                        </li>
+                        <li data-ng-class="{active: vm.listDisplayModeEnabled}" class="toolbaritem">
+                            <a data-ng-click="vm.changeDisplayMode(vm.DisplayModeEnum.List)">
+                                <span class="glyphicon glyphicon-align-justify"></span> List View
+                            </a>
+                        </li>
+                        <li class="toolbaritem">
+                            <a data-ng-click="vm.navigate('/customeredit/0')">
+                                <span class="glyphicon glyphicon-plus"></span> Add Customer
+                            </a>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row cardContainer customersTable show-hide-animation" data-ng-hide="vm.listDisplayModeEnabled">
+                <div class="col-md-4" ng-repeat="customer in vm.filteredCustomers">
+                    <div class="card">
+                        <button class="btn close cardClose" title="Delete Customer">&times;</button>
+                        <div class="cardHeader"><a href="#/customeredit/{{customer.id}}"></a>{{customer.firstName+" "+customer.lastName}}</div>
+                        <div class="cardBody">
+                            <div class="clearfix">
+                                <div class="pull-left cardBodyLeft">
+                                    <img ng-src="content/images/{{customer.gender | lowercase}}.png" class="cardImage"></img>
+                                </div>
+                                <div class="pull-left cardBodyRight">
+                                    <div class="cardBodyContent">{{customer.city}}, {{customer.state.name}}</div>
+                                    <div >{{ customer.orderCount }}
+                                        <span data-ng-pluralize count="customer.orderCount"
+                                                                when="{'1': 'Order','other': 'Orders'}">
+                                         </span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row gridContainer customersTable show-hide-animation" data-ng-show="vm.listDisplayModeEnabled">
+                <div class="gridStyle" ng-grid="vm.gridOptions" ui-grid-edit ui-grid-selection></div>
+                <!--<div ng-repeat="customer in vm.filteredCustomers.customers">
+                    <label for="" >{{customer.firstName}}</label>
+                </div>-->
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

@@ -1,0 +1,169 @@
+<!--http://ui-grid.info/-->
+<!--http://plnkr.co/edit/ggtsdMSyYIRcXHe9zkw1?p=preview    Model Window-->
+<!--http://plnkr.co/edit/2gDvAM?p=preview  Using Controller as & Model Window Passing Object/Values to and from -->
+<!--http://weblogs.asp.net/dwahlin/learning-angularjs-by-example-the-customer-manager-application-->
+<!--https://github.com/DanWahlin/CustomerManagerStandard-->
+<!--http://plnkr.co/edit/ciExi4w6706sbO4esU0q?p=preview    JSON dat Load-->
+<!DOCTYPE html>
+<html ng-app="customersApp">
+
+<head>
+    <title>Customer Manager</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<link href="https://angular-ui.github.com/ng-grid/css/ng-grid.css" rel="stylesheet" />-->
+
+    <link rel="stylesheet" type="text/css" href="https://angular-ui.github.com/ng-grid/css/ng-grid.css" />
+
+    <link href="content/bootstrap.css" rel="stylesheet" />
+
+    <link href="content/styles.css" rel="stylesheet" />
+    <!--<link href="content/animations.css" rel="stylesheet" />
+    -->
+</head>
+
+<body ng-cloak>
+    <header class="navbar navbar-inner navbar-fixed-top" ng-controller="NavbarController as vm">
+        <nav class="container">
+            <!--<div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-click="vm.isCollapsed = !vm.isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">
+                    <img src="content/images/people.png" alt="logo">
+                    <span class="appTitle">{{ vm.appTitle }}</span>
+                </a>
+            </div>-->
+            <div class="nav-container" data-collapse="isCollapsed">
+                <!-- With menu-highlighter directive -->
+                <!--<ul class="nav navbar-nav nav-pills navBarPadding" menu-highlighter highlight-class-name="active">
+                    <li><a href="#/customers">Customers</a>
+                    </li>
+                    <li><a href="#/orders">Orders</a>
+                    </li>
+                    <li><a href="#/about">About</a>
+                    </li>
+                    <li id="nav-login" ng-click="vm.loginOrOut()">-->
+                        <!-- href not used but needed to compare against path in menu-highlighter -->
+                        <!--<a data-href="#/login">{{ vm.loginLogoutText }}</a>
+                    </li>
+                </ul>-->
+                <!-- Without menu-highlighter directive -->
+                <ul class="nav navbar-nav nav-pills navBarPadding">
+                <li ng-class="{'active': vm.highlight('/customers')}"><a href="#/customers">Customers</a></li>
+                <!--<li ng-class="{'active': vm.highlight('/orders')}"><a href="#/orders">Orders</a></li>
+                <li ng-class="{'active': vm.highlight('/about')}"><a href="#/about">About</a></li>-->
+                <li ng-class="{'active': vm.highlight('/login')}" id="nav-login"
+                ng-click="vm.loginOrOut()">
+                <a>{{ vm.loginLogoutText }}</a>
+                </li>
+                </ul>
+
+            </div>
+        </nav>
+    </header>
+    <div class="slide-animation-container">
+        <div ng-view id="ng-view" class="slide-animation"></div>
+    </div>
+    <!--<div id="footer">
+        <div class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner footer">
+                <div class="container">
+                    <footer>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Created by <a href="http://twitter.com/DanWahlin" target="_blank">Dan Wahlin</a>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    
+    <div wc-overlay wc-overlay-delay="300">
+        <br /><img src="content/images/spinner.gif" />&nbsp;&nbsp;Loading
+    </div>
+
+    <!-- 3rd party libraries -->
+    <script src="https://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.8/ng-grid.debug.js"></script>
+
+    <script src="scripts/angular-ui-bootstrap.js"></script>
+
+    <script src="app/wc.directives/directives/wcOverlay.js"></script>
+    
+    <script src="app/customersApp/app.js"></script>
+
+    <script src="app/customersApp/services/authService.js"></script>
+    <script src="app/customersApp/services/config.js"></script>
+    <script src="app/customersApp/services/httpInterceptors.js"></script>
+    <script src="app/customersApp/services/customersService.js"></script>
+    <script src="app/customersApp/services/dataService.js"></script>
+    <script src="app/customersApp/services/customerModalService.js"></script>
+
+
+    <script src="app/customersApp/controllers/navbarController.js"></script>
+    <script src="app/customersApp/controllers/customers/customersController.js"></script>
+    <script src="app/customersApp/controllers/loginController.js"></script>
+    <script src="app/customersApp/controllers/customers/customerEditController.js"></script>
+    <script src="app/customersApp/controllers/customers/customerEditModelController.js"></script>
+    <script src="app/customersApp/controllers/customers/customerNewEditModelController.js"></script>
+
+</body>
+
+</html>
+
+
+
+<!--
+http://plnkr.co/edit/2gDvAM?p=preview  Using Controller as & Model Window Passing Object/Values to and from controller
+// Code goes here
+
+var app = angular.module('angularTest', ['ui.bootstrap']);
+
+app.controller('mainController', ['$modal', function($modal) {
+    var self = this;
+    
+    self.titlePage = 'Angular Modal Controller As Test';
+    self.someObject = '';
+    
+    self.openPopup = function() {
+      var modalInstance = $modal.open({ 
+        templateUrl: './partial.html',
+        controller: 'popupController as popup',
+        resolve: {
+          someObj: function() { 
+            console.log('Before open', self.someObject);
+            return self.someObject; 
+          }
+        }
+      });
+    };
+    
+  }]);
+  
+app.controller('popupController', ['$modalInstance', 'someObj',  function($modalInstance, someObj) {
+    var self = this;
+    //alert('someObj is ' + someObj);
+    self.someObj = someObj;
+    self.someObject = '';
+    
+    self.ok = function () {
+       console.log('After ok', self.someObj);
+      $modalInstance.close(self.someObj);
+    };
+
+    self.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+    
+  }]);
+
+-->
